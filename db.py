@@ -17,29 +17,41 @@ DB_PASS = os.getenv("DB_PASS")
 
 # Função para salvar os dados validados no PostgreSQL
 def salvar_no_postgres(dados: Vendas):
+
+    """
+    Função para salvar as informações do input no banco de dados
+    """
+
     try:
+        st.write('Tentativa de conexão')
         conn = psycopg2.connect(
             host=DB_HOST,
             database=DB_NAME,
             user=DB_USER,
-            password=DB_PASS
+            password=DB_PASS,
         )
-        cursor = conn.cursor()
+        st.write('Conexão bem sucedida')
         
+        cursor = conn.cursor()
+
         # Inserção dos dados na tabela de vendas
         insert_query = sql.SQL(
             "INSERT INTO vendas (email, data, valor, quantidade, produto) VALUES (%s, %s, %s, %s, %s)"
         )
+      
         cursor.execute(insert_query, (
             dados.email,
             dados.data,
             dados.valor,
-            dados.quantidade,
-            dados.produto.value
+            dados.qtde,
+            dados.produto.value,
         ))
+
         conn.commit()
         cursor.close()
         conn.close()
-        st.success("Dados salvos com sucesso no banco de dados!")
+        
+        st.success("Venda cadastrada!")
+
     except Exception as e:
         st.error(f"Erro ao salvar no banco de dados: {e}")
