@@ -2,6 +2,7 @@ import streamlit as st
 from contrato import Vendas
 from datetime import datetime, time
 from pydantic import ValidationError
+from db import salvar_no_postgres
 
 
 def main():
@@ -31,6 +32,7 @@ def main():
             )
 
             st.write(venda)
+            salvar_no_postgres(venda)
 
         except ValidationError as e:
             st.error(f'Deu erro: {e}')
