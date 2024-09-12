@@ -23,14 +23,13 @@ def salvar_no_postgres(dados: Vendas):
     """
 
     try:
-        st.write('Tentativa de conexão')
+
         conn = psycopg2.connect(
             host=DB_HOST,
             database=DB_NAME,
             user=DB_USER,
             password=DB_PASS,
         )
-        st.write('Conexão bem sucedida')
         
         cursor = conn.cursor()
 

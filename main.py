@@ -26,8 +26,6 @@ def main():
 
     if st.button('Salvar'):
 
-        st.write('Salvando...')
-
         try:
             data_hora = datetime.combine(data, hora)
 
